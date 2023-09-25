@@ -9,6 +9,11 @@ class ExampleApi extends ProductBase<IExample> {
             enableSubscribeObserver: true,
         });
     }
+
+    mudarTituloEDescricao = (id, callback=()=>{}) => {
+        console.log(id)
+		this.callMethod('MudarTituloEDescricao', id, callback);
+	}
 }
 
 export const exampleApi = new ExampleApi();

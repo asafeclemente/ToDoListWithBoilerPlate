@@ -102,7 +102,7 @@ export const AppNavBar = (props: IAppNavBar) => {
 									variant={pathIndex !== ind ? 'outlined' : 'contained'}
 									sx={{
 										...appNavBarStyle.buttonMenuItem,
-										color: pathIndex !== ind ? appStyle.secondaryColor : '#FFF'
+										color: pathIndex !== ind ? appStyle.primary : '#FFF'
 									}}
 									key={menuData?.path}
 									onClick={() => navigate(menuData?.path as string)}>

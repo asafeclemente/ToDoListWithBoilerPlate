@@ -319,7 +319,7 @@ export const ComplexTable = (props: IComplexTableProps) => {
 				schema[key].label === 'Empresa' ||
 				schema[key].label === 'Situação'
 					? 'center'
-					: 'flex-start',
+					: 'left',
 			headerAlign:
 				schema[key].label === 'Duração' ||
 				schema[key].label === 'Eventos' ||
@@ -330,7 +330,7 @@ export const ComplexTable = (props: IComplexTableProps) => {
 				schema[key].label === 'Empresa' ||
 				schema[key].label === 'Situação'
 					? 'center'
-					: 'flex-start',
+					: 'left',
 			sortable: disableSorting ? false : true,
 			minWidth: fieldsMinWidthColumnModified?.hasOwnProperty(key) ? fieldsMinWidthColumnModified[key] : 150,
 			maxWidth: fieldsMaxWidthColumnModified?.hasOwnProperty(key) ? fieldsMaxWidthColumnModified[key] : 'auto',

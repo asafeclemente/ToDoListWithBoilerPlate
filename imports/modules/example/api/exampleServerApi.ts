@@ -3,6 +3,7 @@ import { Recurso } from '../config/Recursos';
 import { exampleSch, IExample } from './exampleSch';
 import { userprofileServerApi } from '/imports/userprofile/api/UserProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
+import { IContext } from '/imports/typings/IContext';
 // endregion
 
 class ExampleServerApi extends ProductServerBase<IExample> {
@@ -60,7 +61,20 @@ class ExampleServerApi extends ProductServerBase<IExample> {
 			},
 			['get']
 		);
+
+		this.registerMethod('MudarTituloEDescricao', this.serverMudarTituloEDescricao);
 	}
+
+	serverMudarTituloEDescricao = (id: string, context:IContext) => {
+		check(id, String)
+		const newDoc = {
+				title: 'Alterei o titulo',
+				description: 'Nova descrição - 123'
+		}
+
+		return this.serverUpdate({_id: id, ...newDoc}, context)
+
+}
 }
 
 export const exampleServerApi = new ExampleServerApi();

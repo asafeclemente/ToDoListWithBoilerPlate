@@ -1,6 +1,7 @@
 import userprofile from '../userprofile/config';
-import example from './example/config';
 import pages from '../ui/config/index';
+import toDos from './toDos/config';
+import example from './example/config';
 import { IAppMenu, IModules, IRoute } from './modulesTypings';
 
 class Modules implements IModules {
@@ -13,6 +14,7 @@ class Modules implements IModules {
             ...pages.pagesRouterList,
             ...userprofile.userProfileRouterList,
             ...example.exampleRouterList,
+            ...toDos.toDosRouterList
         ];
 
         // Create modules App Menu Item list
@@ -20,6 +22,7 @@ class Modules implements IModules {
             ...pages.pagesMenuItemList,
             ...userprofile.userProfileMenuItemList,
             ...example.exampleMenuItemList,
+            ...toDos.toDosMenuItemList
         ];
     }
 
@@ -40,6 +43,18 @@ class Modules implements IModules {
     getAppMenuItemList = () => {
         return this.modulesAppMenuItemList;
     };
+
+
+    /**
+     * Retorna o items de menu lateral para o módulo ToDo
+     * retistrados na pasta modules
+     * @returns {module}
+     */
+    getModuleToDo = () => {
+        return toDos.toDosMenuItemList[0];
+    };
+
+
 }
 
 export default new Modules();

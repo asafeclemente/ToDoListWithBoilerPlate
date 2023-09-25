@@ -25,7 +25,8 @@ const AppContainer = () => {
 };
 
 export const App = () => {
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	// const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const prefersDarkMode = false
 
 	const [darkThemeMode, setDarkThemeMode] = useState(!!prefersDarkMode);
 	const [fontScale, setFontScale] = useState(1);

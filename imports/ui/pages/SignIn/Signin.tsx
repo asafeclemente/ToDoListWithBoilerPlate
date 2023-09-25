@@ -124,9 +124,15 @@ export const SignIn = (props: ISignIn) => {
 					}}>
 					<Box>
 						<h2 style={signinStyle.labelAccessSystem}>
-							<img src="/images/wireframe/logo.png" style={signinStyle.imageLogo} />
-							<span>Acessar o sistema</span>
+							{/* <img src="/images/wireframe/logo.png" style={signinStyle.imageLogo} /> */}
+							<span>ToDo List</span>
 						</h2>
+						<p>
+							Boas-vindas a sua lista de tarefas.
+						</p>
+						<p>
+								Insira seu e-mail e senha para efetuar login:
+						</p>
 						<SimpleForm
 							schema={{
 								email: { type: 'String', label: 'Email', optional: false },

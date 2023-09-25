@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { exampleApi } from '../../api/exampleApi';
+import { toDosApi } from '../../api/toDosApi';
 import SimpleForm from '../../../../ui/components/SimpleForm/SimpleForm';
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
@@ -16,79 +16,68 @@ import ImageCompactField from '/imports/ui/components/SimpleFormFields/ImageComp
 import Print from '@mui/icons-material/Print';
 import Close from '@mui/icons-material/Close';
 import { PageLayout } from '../../../../ui/layouts/PageLayout';
-import { IExample } from '../../api/exampleSch';
+import { IToDos } from '../../api/toDosSch';
 import { IDefaultContainerProps, IDefaultDetailProps, IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 import { useTheme } from '@mui/material/styles';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
 
-interface IExampleDetail extends IDefaultDetailProps {
-	exampleDoc: IExample;
-	save: (doc: IExample, _callback?: any) => void;
-	mudar: (id: string, _callback?: any) => void;
+interface IToDosDetail extends IDefaultDetailProps {
+	toDosDoc: IToDos;
+	save: (doc: IToDos, _callback?: any) => void;
 }
 
-const ExampleDetail = (props: IExampleDetail) => {
-	const { isPrintView, screenState, loading, exampleDoc, save, mudar, navigate } = props;
+const ToDosDetail = (props: IToDosDetail) => {
+	const { isPrintView, screenState, loading, toDosDoc, save, navigate } = props;
 
 	const theme = useTheme();
 
-	const handleSubmit = (doc: IExample) => {
+	const handleSubmit = (doc: IToDos) => {
 		save(doc);
-	};
-
-	const handleMudar = () => {
-		console.log(exampleDoc._id)
-		mudar(exampleDoc._id, (e,r)=>  {
-			console.log('Error', e);
-			console.log('Result', r);
-		});
-
 	};
 
 	return (
 		<PageLayout
-			key={'ExemplePageLayoutDetailKEY'}
+			key={'TaskPageLayoutDetailKEY'}
 			title={
 				screenState === 'view' ? 'Visualizar exemplo' : screenState === 'edit' ? 'Editar Exemplo' : 'Criar exemplo'
 			}
-			onBack={() => navigate('/example')}
+			onBack={() => navigate('/toDos')}
 			actions={[
 				!isPrintView ? (
 					<span
-						key={'ExempleDetail-spanPrintViewKEY'}
+						key={'TaskDetail-spanPrintViewKEY'}
 						style={{
 							cursor: 'pointer',
 							marginRight: 10,
 							color: theme.palette.secondary.main
 						}}
 						onClick={() => {
-							navigate(`/example/printview/${exampleDoc._id}`);
+							navigate(`/toDos/printview/${toDosDoc._id}`);
 						}}>
-						<Print key={'ExempleDetail-spanPrintKEY'} />
+						<Print key={'TaskDetail-spanPrintKEY'} />
 					</span>
 				) : (
 					<span
-						key={'ExempleDetail-spanNotPrintViewKEY'}
+						key={'TaskDetail-spanNotPrintViewKEY'}
 						style={{
 							cursor: 'pointer',
 							marginRight: 10,
 							color: theme.palette.secondary.main
 						}}
 						onClick={() => {
-							navigate(`/example/view/${exampleDoc._id}`);
+							navigate(`/toDos/view/${toDosDoc._id}`);
 						}}>
-						<Close key={'ExempleDetail-spanCloseKEY'} />
+						<Close key={'TaskDetail-spanCloseKEY'} />
 					</span>
 				)
 			]}>
 			<SimpleForm
-				key={'ExempleDetail-SimpleFormKEY'}
+				key={'TaskDetail-SimpleFormKEY'}
 				mode={screenState}
-				schema={exampleApi.getSchema()}
-				doc={exampleDoc}
+				schema={toDosApi.getSchema()}
+				doc={toDosDoc}
 				onSubmit={handleSubmit}
 				loading={loading}>
-				<ImageCompactField key={'ExempleDetail-ImageCompactFieldKEY'} label={'Imagem Zoom+Slider'} name={'image'} />
 
 				<FormGroup key={'fieldsOne'}>
 					<TextField key={'f1-tituloKEY'} placeholder="Titulo" name="title" />
@@ -96,40 +85,21 @@ const ExampleDetail = (props: IExampleDetail) => {
 				</FormGroup>
 				<FormGroup key={'fieldsTwo'}>
 					<SelectField key={'f2-tipoKEY'} placeholder="Selecione um tipo" name="type" />
-					<SelectField key={'f2-multiTipoKEY'} placeholder="Selecione alguns tipos" name="typeMulti" />
-				</FormGroup>
-				<FormGroup key={'fieldsThree'} {...{ formType: 'subform', name: 'contacts' }}>
-					<TextMaskField key={'f3-TelefoneKEY'} placeholder="Telefone" name="phone" />
-					<TextMaskField key={'f3-CPFKEY'} placeholder="CPF" name="cpf" />
-				</FormGroup>
-				<FormGroup key={'fieldsFour'} {...{ formType: 'subformArray', name: 'tasks' }}>
-					<TextField key={'f4-nomeTarefaKEY'} placeholder="Nome da Tarefa" name="name" />
-					<TextField key={'f4-descricaoTarefaKEY'} placeholder="Descrição da Tarefa" name="description" />
 				</FormGroup>
 
-				<SliderField key={'ExempleDetail-SliderFieldKEY'} placeholder="Slider" name="slider" />
-				**********
+
+				{screenState !== 'create' &&
 				<RadioButtonField
-					key={'ExempleDetail-RadioKEY'}
+					key={'TaskDetail-RadioKEY'}
 					placeholder="Opções da Tarefa"
 					name="statusRadio"
-
+					options={[
+						{ value: 'todo', label: 'Não concluída' },
+						{ value: 'done', label: 'Concluída' }
+					]}
 				/>
-				*************
+				}
 
-				<FormGroup key={'fieldsFifth'}>
-					<AudioRecorder key={'f5-audioKEY'} placeholder="Áudio" name="audio" />
-				</FormGroup>
-
-				<UploadFilesCollection
-					key={'ExempleDetail-UploadsFilesKEY'}
-					name="files"
-					label={'Arquivos'}
-					doc={{ _id: exampleDoc?._id }}
-				/>
-				<FormGroup key={'fieldsSixth'} {...{ name: 'chips' }}>
-					<ChipInput key={'f6-cipsKEY'} name="chip" placeholder="Chip" />
-				</FormGroup>
 				<div
 					key={'Buttons'}
 					style={{
@@ -145,8 +115,8 @@ const ExampleDetail = (props: IExampleDetail) => {
 							style={{ marginRight: 10 }}
 							onClick={
 								screenState === 'edit'
-									? () => navigate(`/example/view/${exampleDoc._id}`)
-									: () => navigate(`/example/list`)
+									? () => navigate(`/toDos/view/${toDosDoc._id}`)
+									: () => navigate(`/toDos/list`)
 							}
 							color={'secondary'}
 							variant="contained">
@@ -158,7 +128,7 @@ const ExampleDetail = (props: IExampleDetail) => {
 						<Button
 							key={'b2'}
 							onClick={() => {
-								navigate(`/example/edit/${exampleDoc._id}`);
+								navigate(`/toDos/edit/${toDosDoc._id}`);
 							}}
 							color={'primary'}
 							variant="contained">
@@ -170,33 +140,28 @@ const ExampleDetail = (props: IExampleDetail) => {
 							{'Salvar'}
 						</Button>
 					) : null}
-					<Button key={'k4'} variant={'contained'}
-					onClick={handleMudar}>
-						{'teste de alterar'}
-					</Button>
 				</div>
 			</SimpleForm>
 		</PageLayout>
 	);
 };
 
-interface IExampleDetailContainer extends IDefaultContainerProps {}
+interface IToDosDetailContainer extends IDefaultContainerProps {}
 
-export const ExampleDetailContainer = withTracker((props: IExampleDetailContainer) => {
+export const ToDosDetailContainer = withTracker((props: IToDosDetailContainer) => {
 	const { screenState, id, navigate, showNotification } = props;
 
-	const subHandle = !!id ? exampleApi.subscribe('exampleDetail', { _id: id }) : null;
-	const exampleDoc = id && subHandle?.ready() ? exampleApi.findOne({ _id: id }) : {};
+	const subHandle = !!id ? toDosApi.subscribe('toDosDetail', { _id: id }) : null;
+	let toDosDoc = id && subHandle?.ready() ? toDosApi.findOne({ _id: id }) : {};
 
 	return {
 		screenState,
-		exampleDoc,
-		mudar: (id: string, callback: () => void) => exampleApi.mudarTituloEDescricao(id, callback),
-		save: (doc: IExample, _callback: () => void) => {
+		toDosDoc,
+		save: (doc: IToDos, _callback: () => void) => {
 			const selectedAction = screenState === 'create' ? 'insert' : 'update';
-			exampleApi[selectedAction](doc, (e: IMeteorError, r: string) => {
+			toDosApi[selectedAction](doc, (e: IMeteorError, r: string) => {
 				if (!e) {
-					navigate(`/example/view/${screenState === 'create' ? r : doc._id}`);
+					navigate(`/toDos`);
 					showNotification &&
 						showNotification({
 							type: 'success',
@@ -215,4 +180,4 @@ export const ExampleDetailContainer = withTracker((props: IExampleDetailContaine
 			});
 		}
 	};
-})(showLoading(ExampleDetail));
+})(showLoading(ToDosDetail));
