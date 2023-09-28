@@ -13,6 +13,7 @@ import ChipInput from '../../../../ui/components/SimpleFormFields/ChipInput/Chip
 import SliderField from '/imports/ui/components/SimpleFormFields/SliderField/SliderField';
 import AudioRecorder from '/imports/ui/components/SimpleFormFields/AudioRecorderField/AudioRecorder';
 import ImageCompactField from '/imports/ui/components/SimpleFormFields/ImageCompactField/ImageCompactField';
+import { getUser } from '/imports/libs/getUser';
 import Print from '@mui/icons-material/Print';
 import Close from '@mui/icons-material/Close';
 import { PageLayout } from '../../../../ui/layouts/PageLayout';
@@ -20,6 +21,7 @@ import { IToDos } from '../../api/toDosSch';
 import { IDefaultContainerProps, IDefaultDetailProps, IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 import { useTheme } from '@mui/material/styles';
 import { showLoading } from '/imports/ui/components/Loading/Loading';
+import ToggleField from '/imports/ui/components/SimpleFormFields/ToggleField/ToggleField';
 
 interface IToDosDetail extends IDefaultDetailProps {
 	toDosDoc: IToDos;
@@ -83,8 +85,12 @@ const ToDosDetail = (props: IToDosDetail) => {
 					<TextField key={'f1-tituloKEY'} placeholder="Titulo" name="title" />
 					<TextField key={'f1-descricaoKEY'} placeholder="Descrição" name="description" />
 				</FormGroup>
-				<FormGroup key={'fieldsTwo'}>
+				{/* <FormGroup key={'fieldsTwo'}>
 					<SelectField key={'f2-tipoKEY'} placeholder="Selecione um tipo" name="type" />
+				</FormGroup> */}
+
+				<FormGroup key={'fieldsThree'}>
+					<ToggleField key={'f2-tipoKEY'} placeholder="Selecione um tipo" id="ToggleField" name="isPrivate" />
 				</FormGroup>
 
 
@@ -124,7 +130,7 @@ const ToDosDetail = (props: IToDosDetail) => {
 						</Button>
 					) : null}
 
-					{!isPrintView && screenState === 'view' ? (
+					{!isPrintView && screenState === 'view' && toDosDoc.createdby === getUser()._id? (
 						<Button
 							key={'b2'}
 							onClick={() => {

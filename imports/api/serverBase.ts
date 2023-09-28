@@ -960,7 +960,7 @@ export class ServerApiBase<Doc extends IDoc> {
 		if (optionsPub.sort) {
 			queryOptions.sort = optionsPub.sort;
 		}
-
+		console.log(filter)
 		return this.getCollectionInstance().find({ ...filter }, queryOptions);
 	}
 

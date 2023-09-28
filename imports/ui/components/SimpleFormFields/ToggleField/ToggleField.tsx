@@ -5,6 +5,7 @@ import SimpleLabelView from '/imports/ui/components/SimpleLabelView/SimpleLabelV
 import { toggleSwitchStyle } from './ToggleFieldStyle';
 
 export default ({ name, label, value, onChange, readOnly, error, ...otherProps }: IBaseSimpleFormComponent) => {
+
 	const handleChangeSwitch = (event: React.BaseSyntheticEvent) => {
 		if (!readOnly) {
 			onChange({ name, target: { name, value: event.target.checked } }, { name, value: event.target.checked });

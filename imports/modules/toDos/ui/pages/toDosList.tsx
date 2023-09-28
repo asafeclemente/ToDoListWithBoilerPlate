@@ -6,6 +6,7 @@ import { SimpleTable } from '/imports/ui/components/SimpleTable/SimpleTable';
 import _ from 'lodash';
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
+import Edit from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
 import TablePagination from '@mui/material/TablePagination';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -133,33 +134,11 @@ const ToDosList = (props: IToDosList) => {
 						)}
 						data={toDoss}
 						onClick={onClick}
-						actions={[{ icon: <Delete />, id: 'delete', onClick: callRemove }]}
+						actions={[{ icon: <Delete />, id: 'delete', onClick: callRemove },
+						{ icon: <Edit />, id: 'edit', onClick: (row) => navigate('/toDos/edit/' + row._id) }
+					]}
 					/>
 				</>
-			)}
-
-			{!isMobile && viewComplexTable && (
-				<ComplexTable
-					data={toDoss}
-					schema={_.pick(
-						{
-							...toDosApi.schema,
-							nomeUsuario: { type: String, label: 'Criado por' }
-						},
-						['image', 'title', 'description', 'nomeUsuario']
-					)}
-					onRowClick={(row) => navigate('/toDos/view/' + row.id)}
-					searchPlaceholder={'Pesquisar exemplo'}
-					onDelete={callRemove}
-					onEdit={(row) => navigate('/toDos/edit/' + row._id)}
-					toolbar={{
-						selectColumns: true,
-						exportTable: { csv: true, print: true },
-						searchFilter: true
-					}}
-					onFilterChange={onSearch}
-					loading={loading}
-				/>
 			)}
 
 			<div
@@ -171,7 +150,7 @@ const ToDosList = (props: IToDosList) => {
 				}}>
 				<TablePagination
 					style={{ width: 'fit-content', overflow: 'unset' }}
-					rowsPerPageOptions={[10, 25, 50, 100]}
+					rowsPerPageOptions={[4, 10, 50, 100]}
 					labelRowsPerPage={''}
 					component="div"
 					count={total || 0}
@@ -205,7 +184,7 @@ const ToDosList = (props: IToDosList) => {
 export const subscribeConfig = new ReactiveVar<IConfigList & { viewComplexTable: boolean }>({
 	pageProperties: {
 		currentPage: 1,
-		pageSize: 10
+		pageSize: 4
 	},
 	sortProperties: { field: 'createdat', sortAscending: true },
 	filter: {},

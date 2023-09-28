@@ -333,7 +333,12 @@ class SimpleForm extends Component<ISimpleFormProps> {
 
 	getDoc = () => this.docValue;
 
-	initialValueDefault = (schema) => {
+	initialValueDefault = (schema, element) => {
+		// if (element.props.id === 'submit'){
+		if (element.props.id === "ToggleField") {
+			this.docValue[element.props.name] = schema.defaultValue
+		}
+		// }
 		if (schema && hasValue(schema.defaultValue)) {
 			return schema.defaultValue;
 		}
@@ -457,7 +462,7 @@ class SimpleForm extends Component<ISimpleFormProps> {
 					self.docValue && hasValue(self.docValue[element.props.name])
 						? self.docValue[element.props.name]
 						: self.props.schema
-						? self.initialValueDefault(self.props.schema[element.props.name])
+						? self.initialValueDefault(self.props.schema[element.props.name], element)
 						: undefined
 				}
 				reactElement={element}

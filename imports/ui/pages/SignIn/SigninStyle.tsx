@@ -41,7 +41,8 @@ const signinStyle = {
 	containerButtonOptions: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		marginTop: 1
 	},
 	containerSocialLoginButton: {
 		width: '100%',

@@ -163,7 +163,7 @@ export const SignIn = (props: ISignIn) => {
 								É novo por aqui? Clique aqui para se cadastrar!
 							</Button>
 						</Box>
-						<Box
+						{/* <Box
 							key="loginoptions"
 							style={{
 								paddingRight: 5,
@@ -201,7 +201,7 @@ export const SignIn = (props: ISignIn) => {
 									}}
 								/>
 							</Box>
-						</Box>
+						</Box> */}
 					</Box>
 				</Box>
 			</Container>

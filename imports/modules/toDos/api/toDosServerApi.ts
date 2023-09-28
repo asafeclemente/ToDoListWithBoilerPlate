@@ -3,6 +3,7 @@ import { Recurso } from '../config/Recursos';
 import { toDosSch, IToDos } from './toDosSch';
 import { userprofileServerApi } from '/imports/userprofile/api/UserProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
+import { getUser } from '/imports/libs/getUser';
 // endregion
 
 class ToDosServerApi extends ProductServerBase<IToDos> {
@@ -16,7 +17,12 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
         this.addTransformedPublication(
             'toDosList',
             (filter = {}, pagination = {}) => {
-                return this.defaultListCollectionPublication(filter, {
+                return this.defaultListCollectionPublication({
+                    $or: [
+                      { isPrivate: false, ...filter},   // Tarefas não privadas (private não igual a 1)
+                      { createdby: getUser()._id, ...filter} // Tarefas do usuário atual
+                    ]
+                  }, {
                     projection: { image: 1, title: 1, description: 1, createdby: 1 },
                     ...pagination
                 });

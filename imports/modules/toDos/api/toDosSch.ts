@@ -13,29 +13,19 @@ export const toDosSch = {
         defaultValue: '',
         optional: true,
     },
-    // check: {
-    //     type: Object,
-    //     label: 'check box',
-    //     defaultValue: {},
-    //     optional: true,
-    //     options: ['Todo', 'Doing', 'Done'],
-    // },
-    type: {
-        type: String,
-        label: 'Tipo',
-        defaultValue: '',
+    isPrivate: {
+        type: Boolean,
+        label: 'Tarefa privada',
+        defaultValue: true,
         optional: false,
-        options: [
-            { value: 'privada', label: 'Privada' },
-            { value: 'publica', label: 'Pública' },
-        ],
     },
+
     statusRadio: {
         type: String,
-        label: 'Status RadioButton',
-        defaultValue: '',
+        label: 'Status',
+        defaultValue: 'todo',
         optional: true,
-        radiosList: ['Todo', 'Doing', 'Done'],
+        radiosList: ['Todo', 'Done'],
     },
 };
 
